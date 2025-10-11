@@ -77,7 +77,8 @@ public class CategoryService {
     }
 
     // Check if the new data violates unique constraint
-    if (categoryRepository.findByName(updatedData.name()).isPresent()) {
+    if (categoryRepository.findByName(updatedData.name())
+        .filter(existing -> existing.getId() != id).isPresent()) {
       throw new ResponseStatusException(HttpStatus.CONFLICT,
           "Another category with this name already exists!");
     }
