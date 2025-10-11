@@ -36,6 +36,12 @@ public class CategoryService {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provide the new category data!");
     }
 
+    // Check if category already exists
+    if (categoryRepository.findByName(newCategory.name()).isPresent()) {
+      throw new ResponseStatusException(HttpStatus.CONFLICT,
+          "A category with this name already exists!");
+    }
+
     Category category = categoryRepository.saveAndFlush(CategoryUtil.toObject(newCategory));
     log.info("A new category with ID:{} has been added", category.getId());
 
