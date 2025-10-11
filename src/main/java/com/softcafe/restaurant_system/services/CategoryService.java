@@ -93,7 +93,7 @@ public class CategoryService {
 
     category = categoryRepository.saveAndFlush(category);
 
-    log.info("Category wiht ID {} has been updated", category.getId());
+    log.info("Category with ID {} has been updated", category.getId());
 
     return CategoryUtil.toDto(category);
   }
