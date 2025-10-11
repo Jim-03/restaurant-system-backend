@@ -8,18 +8,20 @@ import com.softcafe.restaurant_system.repositories.CategoryRepository;
 import com.softcafe.restaurant_system.utils.CategoryUtil;
 import jakarta.transaction.Transactional;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class CategoryService {
 
-  private CategoryRepository categoryRepository;
+  private final CategoryRepository categoryRepository;
+
+  public CategoryService(CategoryRepository categoryRepository) {
+    this.categoryRepository = categoryRepository;
+  }
 
   /**
    * Adds a new category to the system
