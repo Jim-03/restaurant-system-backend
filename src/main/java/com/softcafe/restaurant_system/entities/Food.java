@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "food_items")
-public class FoodItem {
+public class Food {
 
   @Id
   @GeneratedValue
