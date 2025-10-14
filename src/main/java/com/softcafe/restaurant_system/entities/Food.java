@@ -38,6 +38,9 @@ public class Food {
   @JoinColumn(name = "category_id")
   private Category category;
 
+  @Column(name = "image_url")
+  private String imageUrl;
+
   @Column(nullable = false)
   private Double price;
 

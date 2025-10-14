@@ -14,6 +14,8 @@ public record NewFood(
     @NotNull(message = "Provide the id of the category the food item belongs to!")
     @Schema(description = "Category's primary key", example = "1")
     int category_id,
+    @Schema(description = "Link to the image file", example = "https://example.com/fish.png")
+    String imageUrl,
     @NotNull(message = "Provide the price of the food item!")
     @Schema(description = "Food price in KSHS", example = "250")
     Double price,
