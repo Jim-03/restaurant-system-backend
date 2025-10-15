@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +27,8 @@ public class Category {
   @GeneratedValue
   private int id;
 
+  @NotEmpty(message = "Category name shouldn't be empty!")
+  @NotNull(message = "Provide the category's name!")
   @Column(unique = true, nullable = false)
   private String name;
 
