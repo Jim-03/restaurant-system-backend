@@ -10,9 +10,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/category")
+@Validated
 @Tag(name = "CategoryController", description = "Controller containing endpoints handling the category model")
 public class CategoryController {
 
@@ -61,6 +64,7 @@ public class CategoryController {
   })
   @PostMapping
   public ResponseEntity<CategoryData> addNewCategory(
+      @Valid
       @NotNull(message = "Provide the new category's details")
       @RequestBody NewCategory newCategory
   ) {
@@ -87,8 +91,9 @@ public class CategoryController {
   })
   @PutMapping("/{id}")
   public ResponseEntity<CategoryData> update(
-      @NotNull(message = "Provide the category's id!") @PathVariable int id,
-      @NotNull(message = "Provide the updated data!") @RequestBody NewCategory newCategory
+      @NotNull(message = "Provide the category's id!")
+      @NotNull(message = "Provide the updated data!")
+      @Valid
   ) {
     return ResponseEntity.status(200).body(categoryService.updateCategory(id, newCategory));
   }
@@ -110,7 +115,8 @@ public class CategoryController {
   })
   @DeleteMapping("/{id}")
   public ResponseEntity<Map<String, String>> delete(
-      @NotNull(message = "Provide the category's id!") @PathVariable int id
+      @NotNull(message = "Provide the category's id!")
+      @PathVariable int id
   ) {
     categoryService.deleteCategory(id);
     return ResponseEntity.status(200).body(Map.of("message", "successfully deleted the category"));

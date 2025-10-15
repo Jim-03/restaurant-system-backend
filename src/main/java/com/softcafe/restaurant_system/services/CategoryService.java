@@ -7,14 +7,17 @@ import com.softcafe.restaurant_system.entities.Category;
 import com.softcafe.restaurant_system.repositories.CategoryRepository;
 import com.softcafe.restaurant_system.utils.CategoryUtil;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Slf4j
+@Validated
 public class CategoryService {
 
   private final CategoryRepository categoryRepository;
@@ -31,7 +34,7 @@ public class CategoryService {
    * @throws ResponseStatusException in case the new category data isn't provided
    */
   @Transactional
-  public CategoryData addNewCategory(NewCategory newCategory) {
+  public CategoryData addNewCategory(@Valid NewCategory newCategory) {
     if (newCategory == null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provide the new category data!");
     }
@@ -71,7 +74,7 @@ public class CategoryService {
    *                                 case record isn't found
    */
   @Transactional
-  public CategoryData updateCategory(int id, NewCategory updatedData) {
+  public CategoryData updateCategory(int id, @Valid NewCategory updatedData) {
     if (updatedData == null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provide the updated data!");
     }
