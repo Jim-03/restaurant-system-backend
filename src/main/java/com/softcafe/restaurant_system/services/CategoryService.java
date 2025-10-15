@@ -40,7 +40,7 @@ public class CategoryService {
     }
 
     // Check if category already exists
-    if (categoryRepository.findByName(newCategory.name()).isPresent()) {
+    if (categoryRepository.findByNameIgnoreCase(newCategory.name()).isPresent()) {
       throw new ResponseStatusException(HttpStatus.CONFLICT,
           "A category with this name already exists!");
     }
@@ -80,7 +80,7 @@ public class CategoryService {
     }
 
     // Check if the new data violates unique constraint
-    if (categoryRepository.findByName(updatedData.name())
+    if (categoryRepository.findByNameIgnoreCase(updatedData.name())
         .filter(existing -> existing.getId() != id).isPresent()) {
       throw new ResponseStatusException(HttpStatus.CONFLICT,
           "Another category with this name already exists!");
