@@ -36,7 +36,7 @@ public class CategoryController {
     this.categoryService = categoryService;
   }
 
-  @Operation(description = "Fetches a list of all categories")
+  @Operation(summary = "Fetches a list of all categories")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "The list of categories successfully retrieved", content = @Content(
           mediaType = "application/json", schema = @Schema(implementation = ListOfCategories.class)
@@ -47,7 +47,7 @@ public class CategoryController {
     return ResponseEntity.ok(categoryService.getAllCategories());
   }
 
-  @Operation(description = "Adds a new category")
+  @Operation(summary = "Adds a new category")
   @ApiResponses({
       @ApiResponse(responseCode = "201", description = "Category successfully added", content = @Content(
           mediaType = "application/json", schema = @Schema(implementation = CategoryData.class)
@@ -66,12 +66,17 @@ public class CategoryController {
   public ResponseEntity<CategoryData> addNewCategory(
       @Valid
       @NotNull(message = "Provide the new category's details")
+      @io.swagger.v3.oas.annotations.parameters.RequestBody(
+          description = "The new category's details",
+          required = true,
+          content = @Content(schema = @Schema(implementation = NewCategory.class))
+      )
       @RequestBody NewCategory newCategory
   ) {
     return ResponseEntity.status(201).body(categoryService.addNewCategory(newCategory));
   }
 
-  @Operation(description = "Updates a category's details")
+  @Operation(summary = "Updates a category's details")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Category successfully updated", content = @Content(
           mediaType = "application/json", schema = @Schema(implementation = CategoryData.class)
@@ -92,13 +97,23 @@ public class CategoryController {
   @PutMapping("/{id}")
   public ResponseEntity<CategoryData> update(
       @NotNull(message = "Provide the category's id!")
+      @io.swagger.v3.oas.annotations.parameters.RequestBody(
+          description = "The category's primary key",
+          required = true,
+          content = @Content(schema = @Schema(example = "1"))
+      ) @PathVariable int id,
       @NotNull(message = "Provide the updated data!")
       @Valid
+      @io.swagger.v3.oas.annotations.parameters.RequestBody(
+          description = "The newly updated category data",
+          required = true,
+          content = @Content(schema = @Schema(implementation = NewCategory.class))
+      ) @RequestBody NewCategory newCategory
   ) {
     return ResponseEntity.status(200).body(categoryService.updateCategory(id, newCategory));
   }
 
-  @Operation(description = "Removes a category's data from the system")
+  @Operation(summary = "Removes a category's data from the system")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Category successfully removed", content = @Content(
           mediaType = "application/json", schema = @Schema(example = "{\"message\": \"Category successfully deleted\"}")
@@ -116,6 +131,11 @@ public class CategoryController {
   @DeleteMapping("/{id}")
   public ResponseEntity<Map<String, String>> delete(
       @NotNull(message = "Provide the category's id!")
+      @io.swagger.v3.oas.annotations.parameters.RequestBody(
+          description = "The category's primary key",
+          required = true,
+          content = @Content(schema = @Schema(example = "1"))
+      )
       @PathVariable int id
   ) {
     categoryService.deleteCategory(id);
