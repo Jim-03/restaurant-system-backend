@@ -3,6 +3,7 @@ package com.softcafe.restaurant_system.controllers;
 import com.softcafe.restaurant_system.dtos.category.CategoryData;
 import com.softcafe.restaurant_system.dtos.category.ListOfCategories;
 import com.softcafe.restaurant_system.dtos.category.NewCategory;
+import com.softcafe.restaurant_system.dtos.errors.InvalidError;
 import com.softcafe.restaurant_system.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -56,7 +57,7 @@ public class CategoryController {
           mediaType = "application/json", schema = @Schema(example = "{\"message\": \"Provide the category's details\"}")
       )),
       @ApiResponse(responseCode = "409", description = "Category violates unique constraint", content = @Content(
-          mediaType = "application/json", schema = @Schema(example = "{\"message\": \"A category with this name already exists!\"}")
+          mediaType = "application/json", schema = @Schema(implementation = InvalidError.class)
       )),
       @ApiResponse(responseCode = "500", description = "internal server error", content = @Content(
           mediaType = "application/json", schema = @Schema(example = "{\"message\": \"An error has occurred!\"}")
@@ -88,7 +89,7 @@ public class CategoryController {
           mediaType = "application/json", schema = @Schema(example = "{\"message\": \"Category not found!\"}")
       )),
       @ApiResponse(responseCode = "409", description = "Updated data violates unique constraint", content = @Content(
-          mediaType = "application/json", schema = @Schema(example = "{\"message\": \"A category with this name already exists!\"}")
+          mediaType = "application/json", schema = @Schema(implementation = InvalidError.class)
       )),
       @ApiResponse(responseCode = "500", description = "internal server error", content = @Content(
           mediaType = "application/json", schema = @Schema(example = "{\"message\": \"An error has occurred!\"}")

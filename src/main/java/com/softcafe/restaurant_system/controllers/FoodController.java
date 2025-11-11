@@ -1,5 +1,6 @@
 package com.softcafe.restaurant_system.controllers;
 
+import com.softcafe.restaurant_system.dtos.errors.InvalidError;
 import com.softcafe.restaurant_system.dtos.food.FoodData;
 import com.softcafe.restaurant_system.dtos.food.ListOfFood;
 import com.softcafe.restaurant_system.dtos.food.NewFood;
@@ -51,7 +52,7 @@ public class FoodController {
           mediaType = "application/json", schema = @Schema(example = "{\"message\": \"The specified category wasn't found!\"}")
       )),
       @ApiResponse(responseCode = "409", description = "Food data violates unique constraint", content = @Content(
-          mediaType = "application/json", schema = @Schema(example = "{\"message\": \"A food item with this name already exists!\"}")
+          mediaType = "application/json", schema = @Schema(implementation = InvalidError.class)
       )),
       @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(
           mediaType = "application/json", schema = @Schema(example = "{\"message\": \"An error occurred!\"}")
@@ -186,7 +187,7 @@ public class FoodController {
           mediaType = "application/json", schema = @Schema(example = "{\"message\": \"The specified food item doesn't exist!\"}")
       )),
       @ApiResponse(responseCode = "409", description = "Food data violates unique constraint", content = @Content(
-          mediaType = "application/json", schema = @Schema(example = "{\"message\": \"A food item with this name already exists!\"}")
+          mediaType = "application/json", schema = @Schema(implementation = InvalidError.class)
       )),
       @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(
           mediaType = "application/json", schema = @Schema(example = "{\"message\": \"An error has occurred!\"}")
