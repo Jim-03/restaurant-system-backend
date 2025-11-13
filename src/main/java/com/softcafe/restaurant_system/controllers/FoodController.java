@@ -7,6 +7,7 @@ import com.softcafe.restaurant_system.dtos.food.NewFood;
 import com.softcafe.restaurant_system.entities.FoodAvailability;
 import com.softcafe.restaurant_system.services.FoodService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -87,18 +88,18 @@ public class FoodController {
   @GetMapping("/availability")
   public ResponseEntity<ListOfFood> available(
       @NotNull(message = "Provide the availability to search for!")
-      @io.swagger.v3.oas.annotations.parameters.RequestBody(
+      @Parameter(
           description = "The availability level",
           required = true,
-          content = @Content(schema = @Schema(implementation = FoodAvailability.class))
+          schema = @Schema(implementation = FoodAvailability.class)
       )
       @RequestParam("availability") FoodAvailability availability,
       @NotNull(message = "Provide the page to search from!")
       @Min(value = 1, message = "Pages start from 1!")
-      @io.swagger.v3.oas.annotations.parameters.RequestBody(
+      @Parameter(
           description = "Page to fetch from. 1-indexed",
           required = true,
-          content = @Content(schema = @Schema(example = "1"))
+          schema = @Schema(example = "1")
       )
       @RequestParam("page") int page
   ) {
@@ -120,18 +121,18 @@ public class FoodController {
   @GetMapping("/search")
   public ResponseEntity<ListOfFood> search(
       @NotNull(message = "Provide the name to search for!")
-      @io.swagger.v3.oas.annotations.parameters.RequestBody(
+      @Parameter(
           description = "The name to search for",
           required = true,
-          content = @Content(schema = @Schema(example = "fish"))
+          schema = @Schema(example = "fish")
       )
       @RequestParam("name") String name,
       @NotNull(message = "Provide the page to search from!")
       @Min(value = 1, message = "Pages start from 1!")
-      @io.swagger.v3.oas.annotations.parameters.RequestBody(
+      @Parameter(
           description = "Page to fetch from. 1-indexed",
           required = true,
-          content = @Content(schema = @Schema(example = "1"))
+          schema = @Schema(example = "1")
       )
       @RequestParam("page") int page
 
@@ -157,18 +158,18 @@ public class FoodController {
   @GetMapping("/category/{id}")
   public ResponseEntity<ListOfFood> categorize(
       @NotNull(message = "Provide the category's id!")
-      @io.swagger.v3.oas.annotations.parameters.RequestBody(
+      @Parameter(
           description = "The category's id",
           required = true,
-          content = @Content(schema = @Schema(example = "1"))
+          schema = @Schema(example = "1")
       )
       @PathVariable int id,
       @NotNull(message = "Provide the page to search from!")
       @Min(value = 1, message = "Pages start from 1!")
-      @io.swagger.v3.oas.annotations.parameters.RequestBody(
+      @Parameter(
           description = "Page to fetch from. 1-indexed",
           required = true,
-          content = @Content(schema = @Schema(example = "1"))
+          schema = @Schema(example = "1")
       )
       @RequestParam("page") int page
   ) {
@@ -197,10 +198,10 @@ public class FoodController {
   public ResponseEntity<FoodData> update(
       @Min(value = 1, message = "Provide a valid id!")
       @NotNull(message = "Provide a valid id!")
-      @io.swagger.v3.oas.annotations.parameters.RequestBody(
+      @Parameter(
           description = "The food item's primary key",
           required = true,
-          content = @Content(schema = @Schema(example = "1"))
+          schema = @Schema(example = "1")
       )
       @PathVariable Long id,
       @NotNull(message = "Provide the food data!")
@@ -234,10 +235,10 @@ public class FoodController {
   public ResponseEntity<Map<String, String>> delete(
       @Min(value = 1, message = "Provide a valid id!")
       @NotNull(message = "Provide a valid id!")
-      @io.swagger.v3.oas.annotations.parameters.RequestBody(
+      @Parameter(
           description = "The food item's primary key",
           required = true,
-          content = @Content(schema = @Schema(example = "1"))
+          schema = @Schema(example = "1")
       )
       @PathVariable Long id
   ) {
